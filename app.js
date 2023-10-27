@@ -10,7 +10,7 @@ const people = require("./json/people.json"); // Importa los datos iniciales (ge
 
 app.get("/", (req, res) => {
   // El primer parámetro SIEMPRE es asociado a la request (petición) y el segundo a la response (respuesta)
-  res.send("<h1>Bienvenid@ al servidor</h1>");
+  res.send("<h1>Bienvenid al servidor</h1>");
 });
 
 app.get("/people", (req, res) => {
@@ -38,11 +38,13 @@ app.put("/people/:index", (req, res) => {
   /* COMPLETA EL CÓDIGO NECESARIO:
      Para que se pueda actualizar el objeto asociado al índice indicado en la URL 
    */
-  let index = req.params.index;
+     let index = req.params.index;
 
-  if (index >= 0 && index < people.length) { // si el indice es valido
-    people[index] = req.body;
-  }
+     if (index >= 0 && index < people.length) {
+      for (let dato in req.body) {
+        people[index][dato] = req.body[dato];
+      }      
+    }
 });
 
 app.delete("/people/:index", (req, res) => {
@@ -51,9 +53,7 @@ app.delete("/people/:index", (req, res) => {
    */
   let index = req.params.index;
 
-  if (index >= 0 && index < people.length) { //Si el indice el valido
-    const personDelete = people.splice(index, 1);
-  }
+  people.splice(index,1);
 });
 
 // Esta línea inicia el servidor para que escuche peticiones en el puerto indicado
